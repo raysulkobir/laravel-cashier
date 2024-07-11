@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PlaneController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::middleware("auth")->group(function () {
+    Route::get('plans', [PlaneController::class, 'index']);
+    Route::get('plans/{plan}', [PlaneController::class, 'show'])->name("plans.show");
+    Route::post('subscription', [PlaneController::class, 'subscription'])->name("subscription.create");
+});
+
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
